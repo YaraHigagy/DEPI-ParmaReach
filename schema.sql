@@ -14,8 +14,6 @@ GO
 USE PharmaReachDB;
 GO
 
-
-
 -- ===========================
 -- Step 3: Create Tables
 -- ===========================
@@ -30,7 +28,9 @@ CREATE TABLE Customers (
     Address NVARCHAR(255),
     Password NVARCHAR(255) NOT NULL,
     PhoneNumber NVARCHAR(15),
-    DateOfBirth DATE
+    DateOfBirth DATE,
+    IsVerified BIT DEFAULT 0,
+    CreatedAt DATETIME DEFAULT GETDATE()
 );
 
 -- ===========================
@@ -43,7 +43,9 @@ CREATE TABLE CharitableOrganizations (
     PhoneNumber NVARCHAR(15),
     Address NVARCHAR(255),
     Password NVARCHAR(255) NOT NULL,
-    LegalLicense NVARCHAR(255)
+    LegalLicense NVARCHAR(255),
+    IsVerified BIT DEFAULT 0,
+    CreatedAt DATETIME DEFAULT GETDATE()
 );
 
 CREATE TABLE CharitableOrganizationsRecipients (
@@ -52,6 +54,7 @@ CREATE TABLE CharitableOrganizationsRecipients (
     SocialStatusDescription NVARCHAR(255),
     SerialNumber NVARCHAR(255),
     CustomerID INT NOT NULL,
+    IsApproved BIT DEFAULT 0,
     FOREIGN KEY (CustomerID) REFERENCES Customers(ID)
 );
 
@@ -65,7 +68,9 @@ CREATE TABLE Pharmacies (
     PhoneNumber NVARCHAR(15),
     Address NVARCHAR(255),
     Password NVARCHAR(255) NOT NULL,
-    LegalLicense NVARCHAR(255)
+    LegalLicense NVARCHAR(255),
+    IsVerified BIT DEFAULT 0,
+    CreatedAt DATETIME DEFAULT GETDATE()
 );
 
 -- ===========================
@@ -76,7 +81,8 @@ CREATE TABLE CommercialMedicines (
     Name NVARCHAR(255) NOT NULL,
     Type NVARCHAR(255),
     Description NVARCHAR(MAX),
-    Amount INT NOT NULL
+    Amount INT NOT NULL,
+    Price DECIMAL(10, 2) NOT NULL DEFAULT 0.0
 );
 
 CREATE TABLE PrePaidMedicines (
@@ -85,7 +91,8 @@ CREATE TABLE PrePaidMedicines (
     Type NVARCHAR(255),
     Description NVARCHAR(MAX),
     Amount INT NOT NULL,
-    MaximumAmountPerCustomer INT
+    MaximumAmountPerCustomer INT,
+    Price DECIMAL(10, 2) NOT NULL DEFAULT 0.0
 );
 
 CREATE TABLE CharitableMedicines (
@@ -93,7 +100,8 @@ CREATE TABLE CharitableMedicines (
     Name NVARCHAR(255) NOT NULL,
     Type NVARCHAR(255),
     Description NVARCHAR(MAX),
-    Amount INT NOT NULL
+    Amount INT NOT NULL,
+    ExpirationDate DATE
 );
 
 CREATE TABLE RareMedicines (
@@ -114,6 +122,7 @@ CREATE TABLE SurplusMedicinesForExamination (
     ExpirationDate DATE,
     Amount INT NOT NULL,
     DonorCustomerID INT,
+    IsApproved BIT DEFAULT 0,
     FOREIGN KEY (DonorCustomerID) REFERENCES Customers(ID)
 );
 
@@ -125,7 +134,8 @@ CREATE TABLE CommercialHealthcareSupplies (
     Name NVARCHAR(255) NOT NULL,
     Type NVARCHAR(255),
     Description NVARCHAR(MAX),
-    Amount INT NOT NULL
+    Amount INT NOT NULL,
+    Price DECIMAL(10, 2) NOT NULL DEFAULT 0.0
 );
 
 CREATE TABLE PrePaidHealthcareSupplies (
@@ -134,7 +144,8 @@ CREATE TABLE PrePaidHealthcareSupplies (
     Type NVARCHAR(255),
     Description NVARCHAR(MAX),
     Amount INT NOT NULL,
-    MaximumAmountPerCustomer INT
+    MaximumAmountPerCustomer INT,
+    Price DECIMAL(10, 2) NOT NULL DEFAULT 0.0
 );
 
 CREATE TABLE CharitableHealthcareSupplies (
@@ -142,7 +153,8 @@ CREATE TABLE CharitableHealthcareSupplies (
     Name NVARCHAR(255) NOT NULL,
     Type NVARCHAR(255),
     Description NVARCHAR(MAX),
-    Amount INT NOT NULL
+    Amount INT NOT NULL,
+    ExpirationDate DATE
 );
 
 -- ===========================
@@ -152,6 +164,7 @@ CREATE TABLE CustomerOrderLists (
     ID INT PRIMARY KEY IDENTITY(1,1),
     CustomerID INT NOT NULL,
     DateTime DATETIME NOT NULL,
+    TotalPrice DECIMAL(10, 2) NOT NULL DEFAULT 0.0,
     FOREIGN KEY (CustomerID) REFERENCES Customers(ID)
 );
 
@@ -160,86 +173,8 @@ CREATE TABLE CustomerOrderDetailsLists (
     CustomerOrderListID INT NOT NULL,
     ProductID INT NOT NULL,
     Amount INT NOT NULL,
+    Price DECIMAL(10, 2) NOT NULL DEFAULT 0.0,
     FOREIGN KEY (CustomerOrderListID) REFERENCES CustomerOrderLists(ID)
 );
 
-CREATE TABLE PrePaidOrderLists (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    CustomerID INT NOT NULL,
-    IsCharitableOrganizationRecipient BIT,
-    CustomerNationalID NVARCHAR(14),
-    PrescriptionIfNeeded NVARCHAR(255),
-    DateTime DATETIME NOT NULL,
-    FOREIGN KEY (CustomerID) REFERENCES Customers(ID)
-);
-
-CREATE TABLE PrePaidOrderDetailsLists (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    PrePaidOrderListID INT NOT NULL,
-    ProductID INT NOT NULL,
-    Amount INT NOT NULL,
-    FOREIGN KEY (PrePaidOrderListID) REFERENCES PrePaidOrderLists(ID)
-);
-
-CREATE TABLE CharitableOrderLists (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    CustomerID INT NOT NULL,
-    DateTime DATETIME NOT NULL,
-    PrescriptionIfNeeded NVARCHAR(255),
-    FOREIGN KEY (CustomerID) REFERENCES Customers(ID)
-);
-
-CREATE TABLE CharitableOrderDetailsLists (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    CharitableOrderListID INT NOT NULL,
-    ProductID INT NOT NULL,
-    Amount INT NOT NULL,
-    FOREIGN KEY (CharitableOrderListID) REFERENCES CharitableOrderLists(ID)
-);
-
--- ===========================
--- Section: Receiving Tickets
--- ===========================
-CREATE TABLE CustomerReceivingTickets (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    CustomerID INT NOT NULL,
-    CustomerOrderListID INT NOT NULL,
-    PharmacyID INT NOT NULL,
-    DateOfReceivingOrder DATE NOT NULL,
-    FOREIGN KEY (CustomerID) REFERENCES Customers(ID),
-    FOREIGN KEY (CustomerOrderListID) REFERENCES CustomerOrderLists(ID),
-    FOREIGN KEY (PharmacyID) REFERENCES Pharmacies(ID)
-);
-
-CREATE TABLE RecipientReceivingTickets (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    CustomerID INT NOT NULL,
-    CustomerOrderListID INT NOT NULL,
-    PharmacyID INT NOT NULL,
-    DateOfReceivingOrder DATE NOT NULL,
-    FOREIGN KEY (CustomerID) REFERENCES Customers(ID),
-    FOREIGN KEY (CustomerOrderListID) REFERENCES CustomerOrderLists(ID),
-    FOREIGN KEY (PharmacyID) REFERENCES Pharmacies(ID)
-);
-
--- ===========================
--- Section: Prescriptions
--- ===========================
-CREATE TABLE PrescriptionsLists (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    PharmacyCharitableOrganizationID INT NOT NULL,
-    FOREIGN KEY (PharmacyCharitableOrganizationID) REFERENCES CharitableOrganizations(ID)
-);
-
-CREATE TABLE Prescriptions (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    PrescriptionListID INT NOT NULL,
-    CustomerID INT NOT NULL,
-    PhotoURL NVARCHAR(MAX),
-    CreatedAt DATETIME NOT NULL,
-    FOREIGN KEY (PrescriptionListID) REFERENCES PrescriptionsLists(ID),
-    FOREIGN KEY (CustomerID) REFERENCES Customers(ID)
-);
-
 GO
-
