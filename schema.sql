@@ -30,7 +30,14 @@ CREATE TABLE Customers (
     PhoneNumber NVARCHAR(15),
     DateOfBirth DATE,
     IsVerified BIT DEFAULT 0,
-    CreatedAt DATETIME DEFAULT GETDATE()
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    CreatedBy NVARCHAR(255),
+    UpdatedAt DATETIME,
+    UpdatedBy NVARCHAR(255),
+    IsDeleted BIT DEFAULT 0,
+    DeletedBy NVARCHAR(255),
+    DeletedDate DATETIME,
+    DeletedReason NVARCHAR(255)
 );
 
 -- ===========================
@@ -45,7 +52,14 @@ CREATE TABLE CharitableOrganizations (
     Password NVARCHAR(255) NOT NULL,
     LegalLicense NVARCHAR(255),
     IsVerified BIT DEFAULT 0,
-    CreatedAt DATETIME DEFAULT GETDATE()
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    CreatedBy NVARCHAR(255),
+    UpdatedAt DATETIME,
+    UpdatedBy NVARCHAR(255),
+    IsDeleted BIT DEFAULT 0,
+    DeletedBy NVARCHAR(255),
+    DeletedDate DATETIME,
+    DeletedReason NVARCHAR(255)
 );
 
 CREATE TABLE CharitableOrganizationsRecipients (
@@ -55,6 +69,14 @@ CREATE TABLE CharitableOrganizationsRecipients (
     SerialNumber NVARCHAR(255),
     CustomerID INT NOT NULL,
     IsApproved BIT DEFAULT 0,
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    CreatedBy NVARCHAR(255),
+    UpdatedAt DATETIME,
+    UpdatedBy NVARCHAR(255),
+    IsDeleted BIT DEFAULT 0,
+    DeletedBy NVARCHAR(255),
+    DeletedDate DATETIME,
+    DeletedReason NVARCHAR(255),
     FOREIGN KEY (CustomerID) REFERENCES Customers(ID)
 );
 
@@ -70,7 +92,14 @@ CREATE TABLE Pharmacies (
     Password NVARCHAR(255) NOT NULL,
     LegalLicense NVARCHAR(255),
     IsVerified BIT DEFAULT 0,
-    CreatedAt DATETIME DEFAULT GETDATE()
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    CreatedBy NVARCHAR(255),
+    UpdatedAt DATETIME,
+    UpdatedBy NVARCHAR(255),
+    IsDeleted BIT DEFAULT 0,
+    DeletedBy NVARCHAR(255),
+    DeletedDate DATETIME,
+    DeletedReason NVARCHAR(255)
 );
 
 -- ===========================
@@ -82,7 +111,15 @@ CREATE TABLE CommercialMedicines (
     Type NVARCHAR(255),
     Description NVARCHAR(MAX),
     Amount INT NOT NULL,
-    Price DECIMAL(10, 2) NOT NULL DEFAULT 0.0
+    Price DECIMAL(10, 2) NOT NULL DEFAULT 0.0,
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    CreatedBy NVARCHAR(255),
+    UpdatedAt DATETIME,
+    UpdatedBy NVARCHAR(255),
+    IsDeleted BIT DEFAULT 0,
+    DeletedBy NVARCHAR(255),
+    DeletedDate DATETIME,
+    DeletedReason NVARCHAR(255)
 );
 
 CREATE TABLE PrePaidMedicines (
@@ -92,7 +129,15 @@ CREATE TABLE PrePaidMedicines (
     Description NVARCHAR(MAX),
     Amount INT NOT NULL,
     MaximumAmountPerCustomer INT,
-    Price DECIMAL(10, 2) NOT NULL DEFAULT 0.0
+    Price DECIMAL(10, 2) NOT NULL DEFAULT 0.0,
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    CreatedBy NVARCHAR(255),
+    UpdatedAt DATETIME,
+    UpdatedBy NVARCHAR(255),
+    IsDeleted BIT DEFAULT 0,
+    DeletedBy NVARCHAR(255),
+    DeletedDate DATETIME,
+    DeletedReason NVARCHAR(255)
 );
 
 CREATE TABLE CharitableMedicines (
@@ -101,7 +146,15 @@ CREATE TABLE CharitableMedicines (
     Type NVARCHAR(255),
     Description NVARCHAR(MAX),
     Amount INT NOT NULL,
-    ExpirationDate DATE
+    ExpirationDate DATE,
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    CreatedBy NVARCHAR(255),
+    UpdatedAt DATETIME,
+    UpdatedBy NVARCHAR(255),
+    IsDeleted BIT DEFAULT 0,
+    DeletedBy NVARCHAR(255),
+    DeletedDate DATETIME,
+    DeletedReason NVARCHAR(255)
 );
 
 CREATE TABLE RareMedicines (
@@ -111,6 +164,14 @@ CREATE TABLE RareMedicines (
     MaximumAmountPerCustomer INT,
     Type NVARCHAR(255),
     MedicineID INT NOT NULL,
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    CreatedBy NVARCHAR(255),
+    UpdatedAt DATETIME,
+    UpdatedBy NVARCHAR(255),
+    IsDeleted BIT DEFAULT 0,
+    DeletedBy NVARCHAR(255),
+    DeletedDate DATETIME,
+    DeletedReason NVARCHAR(255),
     FOREIGN KEY (MedicineID) REFERENCES CommercialMedicines(ID)
 );
 
@@ -123,6 +184,14 @@ CREATE TABLE SurplusMedicinesForExamination (
     Amount INT NOT NULL,
     DonorCustomerID INT,
     IsApproved BIT DEFAULT 0,
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    CreatedBy NVARCHAR(255),
+    UpdatedAt DATETIME,
+    UpdatedBy NVARCHAR(255),
+    IsDeleted BIT DEFAULT 0,
+    DeletedBy NVARCHAR(255),
+    DeletedDate DATETIME,
+    DeletedReason NVARCHAR(255),
     FOREIGN KEY (DonorCustomerID) REFERENCES Customers(ID)
 );
 
@@ -135,26 +204,15 @@ CREATE TABLE CommercialHealthcareSupplies (
     Type NVARCHAR(255),
     Description NVARCHAR(MAX),
     Amount INT NOT NULL,
-    Price DECIMAL(10, 2) NOT NULL DEFAULT 0.0
-);
-
-CREATE TABLE PrePaidHealthcareSupplies (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    Name NVARCHAR(255) NOT NULL,
-    Type NVARCHAR(255),
-    Description NVARCHAR(MAX),
-    Amount INT NOT NULL,
-    MaximumAmountPerCustomer INT,
-    Price DECIMAL(10, 2) NOT NULL DEFAULT 0.0
-);
-
-CREATE TABLE CharitableHealthcareSupplies (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    Name NVARCHAR(255) NOT NULL,
-    Type NVARCHAR(255),
-    Description NVARCHAR(MAX),
-    Amount INT NOT NULL,
-    ExpirationDate DATE
+    Price DECIMAL(10, 2) NOT NULL DEFAULT 0.0,
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    CreatedBy NVARCHAR(255),
+    UpdatedAt DATETIME,
+    UpdatedBy NVARCHAR(255),
+    IsDeleted BIT DEFAULT 0,
+    DeletedBy NVARCHAR(255),
+    DeletedDate DATETIME,
+    DeletedReason NVARCHAR(255)
 );
 
 -- ===========================
@@ -165,16 +223,13 @@ CREATE TABLE CustomerOrderLists (
     CustomerID INT NOT NULL,
     DateTime DATETIME NOT NULL,
     TotalPrice DECIMAL(10, 2) NOT NULL DEFAULT 0.0,
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    CreatedBy NVARCHAR(255),
+    UpdatedAt DATETIME,
+    UpdatedBy NVARCHAR(255),
+    IsDeleted BIT DEFAULT 0,
+    DeletedBy NVARCHAR(255),
+    DeletedDate DATETIME,
+    DeletedReason NVARCHAR(255),
     FOREIGN KEY (CustomerID) REFERENCES Customers(ID)
 );
-
-CREATE TABLE CustomerOrderDetailsLists (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    CustomerOrderListID INT NOT NULL,
-    ProductID INT NOT NULL,
-    Amount INT NOT NULL,
-    Price DECIMAL(10, 2) NOT NULL DEFAULT 0.0,
-    FOREIGN KEY (CustomerOrderListID) REFERENCES CustomerOrderLists(ID)
-);
-
-GO
