@@ -1,0 +1,11 @@
+F:\Course-DEPI-FullStack.netWebDev\FinalProject\PharmaReach\PharmaReach.DataAccessLayer\PharmaReach.CoreLayer\bin\Debug\net8.0\PharmaReach.CoreLayer.deps.json
+F:\Course-DEPI-FullStack.netWebDev\FinalProject\PharmaReach\PharmaReach.DataAccessLayer\PharmaReach.CoreLayer\bin\Debug\net8.0\PharmaReach.CoreLayer.dll
+F:\Course-DEPI-FullStack.netWebDev\FinalProject\PharmaReach\PharmaReach.DataAccessLayer\PharmaReach.CoreLayer\bin\Debug\net8.0\PharmaReach.CoreLayer.pdb
+F:\Course-DEPI-FullStack.netWebDev\FinalProject\PharmaReach\PharmaReach.DataAccessLayer\PharmaReach.CoreLayer\obj\Debug\net8.0\PharmaReach.CoreLayer.GeneratedMSBuildEditorConfig.editorconfig
+F:\Course-DEPI-FullStack.netWebDev\FinalProject\PharmaReach\PharmaReach.DataAccessLayer\PharmaReach.CoreLayer\obj\Debug\net8.0\PharmaReach.CoreLayer.AssemblyInfoInputs.cache
+F:\Course-DEPI-FullStack.netWebDev\FinalProject\PharmaReach\PharmaReach.DataAccessLayer\PharmaReach.CoreLayer\obj\Debug\net8.0\PharmaReach.CoreLayer.AssemblyInfo.cs
+F:\Course-DEPI-FullStack.netWebDev\FinalProject\PharmaReach\PharmaReach.DataAccessLayer\PharmaReach.CoreLayer\obj\Debug\net8.0\PharmaReach.CoreLayer.csproj.CoreCompileInputs.cache
+F:\Course-DEPI-FullStack.netWebDev\FinalProject\PharmaReach\PharmaReach.DataAccessLayer\PharmaReach.CoreLayer\obj\Debug\net8.0\PharmaReach.CoreLayer.dll
+F:\Course-DEPI-FullStack.netWebDev\FinalProject\PharmaReach\PharmaReach.DataAccessLayer\PharmaReach.CoreLayer\obj\Debug\net8.0\refint\PharmaReach.CoreLayer.dll
+F:\Course-DEPI-FullStack.netWebDev\FinalProject\PharmaReach\PharmaReach.DataAccessLayer\PharmaReach.CoreLayer\obj\Debug\net8.0\PharmaReach.CoreLayer.pdb
+F:\Course-DEPI-FullStack.netWebDev\FinalProject\PharmaReach\PharmaReach.DataAccessLayer\PharmaReach.CoreLayer\obj\Debug\net8.0\ref\PharmaReach.CoreLayer.dll

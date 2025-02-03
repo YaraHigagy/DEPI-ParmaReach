@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35514.174 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaReach.DataAccessLayer", "PharmaReach.DataAccessLayer\PharmaReach.DataAccessLayer.csproj", "{A2346F34-0A06-496E-B377-8839D23C701E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaReach.CoreLayer", "PharmaReach.CoreLayer\PharmaReach.CoreLayer.csproj", "{B91149EB-BDAF-4B37-8DE4-C6D425DFA54C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaReach.BusinessLayer", "PharmaReach.BusinessLayer\PharmaReach.BusinessLayer.csproj", "{7F9F27E7-FB52-4E12-B366-2501AF29843A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A2346F34-0A06-496E-B377-8839D23C701E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2346F34-0A06-496E-B377-8839D23C701E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2346F34-0A06-496E-B377-8839D23C701E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2346F34-0A06-496E-B377-8839D23C701E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B91149EB-BDAF-4B37-8DE4-C6D425DFA54C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B91149EB-BDAF-4B37-8DE4-C6D425DFA54C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B91149EB-BDAF-4B37-8DE4-C6D425DFA54C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B91149EB-BDAF-4B37-8DE4-C6D425DFA54C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F9F27E7-FB52-4E12-B366-2501AF29843A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F9F27E7-FB52-4E12-B366-2501AF29843A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F9F27E7-FB52-4E12-B366-2501AF29843A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F9F27E7-FB52-4E12-B366-2501AF29843A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
