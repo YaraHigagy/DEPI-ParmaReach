@@ -225,6 +225,39 @@ CREATE TABLE PrePaidHealthcareSupplies (
 );
 
 -- ===========================
+-- Section: Pharmacy-Medicine Relationship
+-- ===========================
+CREATE TABLE PharmacyMedicine (
+    PharmacyID INT NOT NULL,
+    MedicineID INT NOT NULL,
+    PRIMARY KEY (PharmacyID, MedicineID),
+    FOREIGN KEY (PharmacyID) REFERENCES Pharmacies(ID),
+    FOREIGN KEY (MedicineID) REFERENCES Medicines(ID)
+);
+
+-- ===========================
+-- Section: Pharmacy-Healthcare Supply Relationship
+-- ===========================
+CREATE TABLE PharmacyHealthcareSupply (
+    PharmacyID INT NOT NULL,
+    HealthcareSupplyID INT NOT NULL,
+    PRIMARY KEY (PharmacyID, HealthcareSupplyID),
+    FOREIGN KEY (PharmacyID) REFERENCES Pharmacies(ID),
+    FOREIGN KEY (HealthcareSupplyID) REFERENCES HealthcareSupplies(ID)
+);
+
+-- ===========================
+-- Section: Charitable Organization-Medicine Relationship
+-- ===========================
+CREATE TABLE CharityOrganizationMedicine (
+    CharityOrganizationID INT NOT NULL,
+    MedicineID INT NOT NULL,
+    PRIMARY KEY (CharityOrganizationID, MedicineID),
+    FOREIGN KEY (CharityOrganizationID) REFERENCES CharitableOrganizations(ID),
+    FOREIGN KEY (MedicineID) REFERENCES Medicines(ID)
+);
+
+-- ===========================
 -- Section: Orders
 -- ===========================
 CREATE TABLE Orders (

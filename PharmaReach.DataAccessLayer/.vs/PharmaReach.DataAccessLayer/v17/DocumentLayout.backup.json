@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "F:\\Course-DEPI-FullStack.netWebDev\\FinalProject\\PharmaReach\\PharmaReach.DataAccessLayer\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2346F34-0A06-496E-B377-8839D23C701E}|PharmaReach.DataAccessLayer\\PharmaReach.DataAccessLayer.csproj|f:\\course-depi-fullstack.netwebdev\\finalproject\\pharmareach\\pharmareach.dataaccesslayer\\pharmareach.dataaccesslayer\\pharmareachdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2346F34-0A06-496E-B377-8839D23C701E}|PharmaReach.DataAccessLayer\\PharmaReach.DataAccessLayer.csproj|solutionrelative:pharmareach.dataaccesslayer\\pharmareachdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Course-DEPI-FullStack.netWebDev\\FinalProject\\PharmaReach\\PharmaReach.DataAccessLayer\\PharmaReach.DataAccessLayer\\Models\\Pharmacy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:PharmaReach.DataAccessLayer\\Models\\Pharmacy.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|F:\\Course-DEPI-FullStack.netWebDev\\FinalProject\\PharmaReach\\PharmaReach.DataAccessLayer\\PharmaReach.DataAccessLayer\\PharmaReachDbContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:PharmaReach.DataAccessLayer\\PharmaReachDbContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,12 +35,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Pharmacy.cs",
+              "DocumentMoniker": "F:\\Course-DEPI-FullStack.netWebDev\\FinalProject\\PharmaReach\\PharmaReach.DataAccessLayer\\PharmaReach.DataAccessLayer\\Models\\Pharmacy.cs",
+              "RelativeDocumentMoniker": "PharmaReach.DataAccessLayer\\Models\\Pharmacy.cs",
+              "ToolTip": "F:\\Course-DEPI-FullStack.netWebDev\\FinalProject\\PharmaReach\\PharmaReach.DataAccessLayer\\PharmaReach.DataAccessLayer\\Models\\Pharmacy.cs",
+              "RelativeToolTip": "PharmaReach.DataAccessLayer\\Models\\Pharmacy.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-03T23:32:35.207Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "PharmaReachDbContext.cs",
               "DocumentMoniker": "F:\\Course-DEPI-FullStack.netWebDev\\FinalProject\\PharmaReach\\PharmaReach.DataAccessLayer\\PharmaReach.DataAccessLayer\\PharmaReachDbContext.cs",
               "RelativeDocumentMoniker": "PharmaReach.DataAccessLayer\\PharmaReachDbContext.cs",
               "ToolTip": "F:\\Course-DEPI-FullStack.netWebDev\\FinalProject\\PharmaReach\\PharmaReach.DataAccessLayer\\PharmaReach.DataAccessLayer\\PharmaReachDbContext.cs",
               "RelativeToolTip": "PharmaReach.DataAccessLayer\\PharmaReachDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAABKAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-03T14:59:28.383Z",
               "EditorCaption": ""
