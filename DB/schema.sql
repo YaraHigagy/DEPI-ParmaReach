@@ -19,94 +19,141 @@ GO
 -- ===========================
 
 -- ===========================
+-- Section: Users (Abstract Table - Do not create directly)
+-- ===========================
+/*
+This table serves as a base for Customers, Pharmacies, and CharitableOrganizations.
+It contains common fields and audit columns.  You won't create this table directly;
+instead, you'll inherit from it in the other tables.
+*/
+
+-- ===========================
 -- Section: Customers
 -- ===========================
 CREATE TABLE Customers (
-    ID INT PRIMARY KEY IDENTITY(1,1),
+    Id INT PRIMARY KEY IDENTITY(1,1),
     Name NVARCHAR(255) NOT NULL,
     Email NVARCHAR(255) NOT NULL UNIQUE,
-    Address NVARCHAR(255),
     Password NVARCHAR(255) NOT NULL,
     PhoneNumber NVARCHAR(15),
+    Address NVARCHAR(255),
     DateOfBirth DATE,
     IsVerified BIT DEFAULT 0,
     CreatedAt DATETIME DEFAULT GETDATE(),
-    CreatedBy NVARCHAR(255),
+    CreatedById INT NULL, -- Reference to Customers (Admin or the Customer itself)
     UpdatedAt DATETIME,
-    UpdatedBy NVARCHAR(255),
+    UpdatedById INT NULL, -- Reference to Customers
     IsDeleted BIT DEFAULT 0,
-    DeletedBy NVARCHAR(255),
-    DeletedDate DATETIME,
-    DeletedReason NVARCHAR(255)
+    DeletedById INT NULL, -- Reference to Customers
+    DeletedAt DATETIME,
+    DeletedReason NVARCHAR(255),
+    FOREIGN KEY (CreatedById) REFERENCES Customers(Id),
+    FOREIGN KEY (UpdatedById) REFERENCES Customers(Id),
+    FOREIGN KEY (DeletedById) REFERENCES Customers(Id)
 );
 
 -- ===========================
 -- Section: Charitable Organizations
 -- ===========================
 CREATE TABLE CharitableOrganizations (
-    ID INT PRIMARY KEY IDENTITY(1,1),
+    Id INT PRIMARY KEY IDENTITY(1,1),
     Name NVARCHAR(255) NOT NULL,
     Email NVARCHAR(255) NOT NULL UNIQUE,
+    Password NVARCHAR(255) NOT NULL,
     PhoneNumber NVARCHAR(15),
     Address NVARCHAR(255),
-    Password NVARCHAR(255) NOT NULL,
     LegalLicense NVARCHAR(255),
     IsVerified BIT DEFAULT 0,
     CreatedAt DATETIME DEFAULT GETDATE(),
-    CreatedBy NVARCHAR(255),
+    CreatedById INT NULL,  -- Reference to CharitableOrganizations (Admin or the Organization itself)
     UpdatedAt DATETIME,
-    UpdatedBy NVARCHAR(255),
+    UpdatedById INT NULL,  -- Reference to CharitableOrganizations
     IsDeleted BIT DEFAULT 0,
-    DeletedBy NVARCHAR(255),
-    DeletedDate DATETIME,
-    DeletedReason NVARCHAR(255)
+    DeletedById INT NULL,  -- Reference to CharitableOrganizations
+    DeletedAt DATETIME,
+    DeletedReason NVARCHAR(255),
+    FOREIGN KEY (CreatedById) REFERENCES CharitableOrganizations(Id),
+    FOREIGN KEY (UpdatedById) REFERENCES CharitableOrganizations(Id),
+    FOREIGN KEY (DeletedById) REFERENCES CharitableOrganizations(Id)
 );
 
+-- Charitable Organizations Recipients Table
 CREATE TABLE CharitableOrganizationsRecipients (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    NationalID NVARCHAR(14) NOT NULL UNIQUE,
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    NationalId NVARCHAR(14) NOT NULL UNIQUE,
     SocialStatusDescription NVARCHAR(255),
     SerialNumber NVARCHAR(255),
-    CustomerID INT NOT NULL,
+    CustomerId INT NOT NULL,
     IsApproved BIT DEFAULT 0,
     CreatedAt DATETIME DEFAULT GETDATE(),
-    CreatedBy NVARCHAR(255),
+
+    -- Audit Fields
+    CreatedById INT NULL,
+    CreatedByType NVARCHAR(50) CHECK (CreatedByType IN ('Customer', 'CharitableOrganization')),
     UpdatedAt DATETIME,
-    UpdatedBy NVARCHAR(255),
+    UpdatedById INT NULL,
+    UpdatedByType NVARCHAR(50) CHECK (UpdatedByType IN ('Customer', 'CharitableOrganization')),
     IsDeleted BIT DEFAULT 0,
-    DeletedBy NVARCHAR(255),
-    DeletedDate DATETIME,
+    DeletedById INT NULL,
+    DeletedByType NVARCHAR(50) CHECK (DeletedByType IN ('Customer', 'CharitableOrganization')),
+    DeletedAt DATETIME,
     DeletedReason NVARCHAR(255),
-    FOREIGN KEY (CustomerID) REFERENCES Customers(ID)
+
+    FOREIGN KEY (CustomerId) REFERENCES Customers(Id),
+
+    -- Foreign Key Constraints (Conditional)
+    CONSTRAINT FK_CreatedBy_Customer FOREIGN KEY (CreatedById) REFERENCES Customers(Id),
+    CONSTRAINT FK_CreatedBy_CharityOrg FOREIGN KEY (CreatedById) REFERENCES CharitableOrganizations(Id),
+    CONSTRAINT FK_UpdatedBy_Customer FOREIGN KEY (UpdatedById) REFERENCES Customers(Id),
+    CONSTRAINT FK_UpdatedBy_CharityOrg FOREIGN KEY (UpdatedById) REFERENCES CharitableOrganizations(Id),
+    CONSTRAINT FK_DeletedBy_Customer FOREIGN KEY (DeletedById) REFERENCES Customers(Id),
+    CONSTRAINT FK_DeletedBy_CharityOrg FOREIGN KEY (DeletedById) REFERENCES CharitableOrganizations(Id),
+
+    -- Check Constraint (ensures CreatedById is NULL if CreatedByType is NULL, and vice versa)
+    CONSTRAINT CK_CreatedBy_Consistency CHECK (
+        (CreatedById IS NULL AND CreatedByType IS NULL) OR
+        (CreatedById IS NOT NULL AND CreatedByType IS NOT NULL)
+    ),
+        CONSTRAINT CK_UpdatedBy_Consistency CHECK (
+        (UpdatedById IS NULL AND UpdatedByType IS NULL) OR
+        (UpdatedById IS NOT NULL AND UpdatedByType IS NOT NULL)
+    ),
+        CONSTRAINT CK_DeletedBy_Consistency CHECK (
+        (DeletedById IS NULL AND DeletedByType IS NULL) OR
+        (DeletedById IS NOT NULL AND DeletedByType IS NOT NULL)
+    )
 );
 
 -- ===========================
 -- Section: Pharmacies
 -- ===========================
 CREATE TABLE Pharmacies (
-    ID INT PRIMARY KEY IDENTITY(1,1),
+    Id INT PRIMARY KEY IDENTITY(1,1),
     Name NVARCHAR(255) NOT NULL,
     Email NVARCHAR(255) NOT NULL UNIQUE,
+    Password NVARCHAR(255) NOT NULL,
     PhoneNumber NVARCHAR(15),
     Address NVARCHAR(255),
-    Password NVARCHAR(255) NOT NULL,
     LegalLicense NVARCHAR(255),
     IsVerified BIT DEFAULT 0,
     CreatedAt DATETIME DEFAULT GETDATE(),
-    CreatedBy NVARCHAR(255),
+    CreatedById INT NULL,  -- Reference to Pharmacies (Admin or the Pharmacy itself)
     UpdatedAt DATETIME,
-    UpdatedBy NVARCHAR(255),
+    UpdatedById INT NULL,  -- Reference to Pharmacies
     IsDeleted BIT DEFAULT 0,
-    DeletedBy NVARCHAR(255),
-    DeletedDate DATETIME,
-    DeletedReason NVARCHAR(255)
+    DeletedById INT NULL,  -- Reference to Pharmacies
+    DeletedAt DATETIME,
+    DeletedReason NVARCHAR(255),
+    FOREIGN KEY (CreatedById) REFERENCES Pharmacies(Id),
+    FOREIGN KEY (UpdatedById) REFERENCES Pharmacies(Id),
+    FOREIGN KEY (DeletedById) REFERENCES Pharmacies(Id)
 );
 
 -- ===========================
 -- Section: ProductTypes
 -- ===========================
 CREATE TABLE ProductTypes (
-    ID INT PRIMARY KEY IDENTITY(1,1),
+    Id INT PRIMARY KEY IDENTITY(1,1),
     Name NVARCHAR(255) NOT NULL,
     Description NVARCHAR(1000),
 );
@@ -115,7 +162,7 @@ CREATE TABLE ProductTypes (
 -- Categories for Medicines
 -- ===========================
 CREATE TABLE MedicineCategories (
-    ID INT PRIMARY KEY IDENTITY(1,1),
+    Id INT PRIMARY KEY IDENTITY(1,1),
     Name NVARCHAR(255) NOT NULL,
     Description NVARCHAR(1000)
 );
@@ -124,7 +171,7 @@ CREATE TABLE MedicineCategories (
 -- Categories for Healthcare Supplies
 -- ===========================
 CREATE TABLE HealthcareSupplyCategories (
-    ID INT PRIMARY KEY IDENTITY(1,1),
+    Id INT PRIMARY KEY IDENTITY(1,1),
     Name NVARCHAR(255) NOT NULL,
     Description NVARCHAR(1000)
 );
@@ -133,56 +180,80 @@ CREATE TABLE HealthcareSupplyCategories (
 -- Section: Medicines
 -- ===========================
 CREATE TABLE Medicines (
-    ID INT PRIMARY KEY IDENTITY(1,1),
+    Id INT PRIMARY KEY IDENTITY(1,1),
     Name NVARCHAR(255) NOT NULL,
     Description NVARCHAR(MAX),
-    CategoryID INT NOT NULL,
+    CategoryId INT NOT NULL,
     Amount INT NOT NULL CHECK (Amount >= 0),
     CreatedAt DATETIME DEFAULT GETDATE(),
-    CreatedBy NVARCHAR(255),
+    CreatedById INT NULL,
+	CreatedByType NVARCHAR(50) CHECK (CreatedByType IN ('Pharmacy','CharitableOrganization')),
     UpdatedAt DATETIME,
-    UpdatedBy NVARCHAR(255),
+    UpdatedById INT NULL,
+	UpdatedByType NVARCHAR(50) CHECK (UpdatedByType IN ('Pharmacy','CharitableOrganization')),
     IsDeleted BIT DEFAULT 0,
-    DeletedBy NVARCHAR(255),
-    DeletedDate DATETIME,
+    DeletedById INT NULL,
+	DeletedByType NVARCHAR(50) CHECK (DeletedByType IN ('Pharmacy','CharitableOrganization')),
+    DeletedAt DATETIME,
     DeletedReason NVARCHAR(255),
-    FOREIGN KEY (CategoryID) REFERENCES MedicineCategories(ID)
+    FOREIGN KEY (CategoryId) REFERENCES MedicineCategories(Id),
+    CONSTRAINT FK_CreatedBy_Pharmacy FOREIGN KEY (CreatedById) REFERENCES Pharmacies(Id),
+    CONSTRAINT FK_CreatedBy_CharityOrg FOREIGN KEY (CreatedById) REFERENCES CharitableOrganizations(Id),
+    CONSTRAINT FK_UpdatedBy_Pharmacy FOREIGN KEY (UpdatedById) REFERENCES Pharmacies(Id),
+    CONSTRAINT FK_UpdatedBy_CharityOrg FOREIGN KEY (UpdatedById) REFERENCES CharitableOrganizations(Id),
+    CONSTRAINT FK_DeletedBy_Pharmacy FOREIGN KEY (DeletedById) REFERENCES Pharmacies(Id),
+    CONSTRAINT FK_DeletedBy_CharityOrg FOREIGN KEY (DeletedById) REFERENCES CharitableOrganizations(Id),
+      CONSTRAINT CK_CreatedBy_Consistency CHECK (
+        (CreatedById IS NULL AND CreatedByType IS NULL) OR
+        (CreatedById IS NOT NULL AND CreatedByType IS NOT NULL)
+    ),
+        CONSTRAINT CK_UpdatedBy_Consistency CHECK (
+        (UpdatedById IS NULL AND UpdatedByType IS NULL) OR
+        (UpdatedById IS NOT NULL AND UpdatedByType IS NOT NULL)
+    ),
+        CONSTRAINT CK_DeletedBy_Consistency CHECK (
+        (DeletedById IS NULL AND DeletedByType IS NULL) OR
+        (DeletedById IS NOT NULL AND DeletedByType IS NOT NULL)
+    )
 );
 
 -- ===========================
 -- Section: Healthcare Supplies
 -- ===========================
 CREATE TABLE HealthcareSupplies (
-    ID INT PRIMARY KEY IDENTITY(1,1),
+    Id INT PRIMARY KEY IDENTITY(1,1),
     Name NVARCHAR(255) NOT NULL,
     Description NVARCHAR(MAX),
-    CategoryID INT NOT NULL,
+    CategoryId INT NOT NULL,
     Amount INT NOT NULL CHECK (Amount >= 0),
     CreatedAt DATETIME DEFAULT GETDATE(),
-    CreatedBy NVARCHAR(255),
+    CreatedById INT NULL, -- Reference to Pharmacies (or Admin)
     UpdatedAt DATETIME,
-    UpdatedBy NVARCHAR(255),
+    UpdatedById INT NULL, -- Reference to Pharmacies (or Admin)
     IsDeleted BIT DEFAULT 0,
-    DeletedBy NVARCHAR(255),
-    DeletedDate DATETIME,
+    DeletedById INT NULL, -- Reference to Pharmacies (or Admin)
+    DeletedAt DATETIME,
     DeletedReason NVARCHAR(255),
-    FOREIGN KEY (CategoryID) REFERENCES HealthcareSupplyCategories(ID)
+    FOREIGN KEY (CategoryId) REFERENCES HealthcareSupplyCategories(Id),
+    FOREIGN KEY (CreatedById) REFERENCES Pharmacies(Id),  -- Updated Foreign key
+    FOREIGN KEY (UpdatedById) REFERENCES Pharmacies(Id),  -- Updated Foreign key
+    FOREIGN KEY (DeletedById) REFERENCES Pharmacies(Id)   -- Updated Foreign key
 );
 
 -- ===========================
 -- Section: Charitable Medicines
 -- ===========================
 CREATE TABLE CharitableMedicines (
-    ID INT PRIMARY KEY REFERENCES Medicines(ID),
-    DonorCustomerID INT,
-    CharityOrganizationID INT
+    Id INT PRIMARY KEY REFERENCES Medicines(Id),
+    DonorCustomerId INT,
+    CharityOrganizationId INT
 );
 
 -- ===========================
 -- Section: Prepaid Medicines
 -- ===========================
 CREATE TABLE PrePaidMedicines (
-    ID INT PRIMARY KEY REFERENCES Medicines(ID),
+    Id INT PRIMARY KEY REFERENCES Medicines(Id),
     MinimumAmountPerCustomer INT NOT NULL,
     Price DECIMAL(10, 2) NOT NULL
 );
@@ -191,7 +262,7 @@ CREATE TABLE PrePaidMedicines (
 -- Section: Rare Medicines
 -- ===========================
 CREATE TABLE RareMedicines (
-    ID INT PRIMARY KEY REFERENCES Medicines(ID),
+    Id INT PRIMARY KEY REFERENCES Medicines(Id),
     Status NVARCHAR(50),
     MinimumAmountPerCustomer INT NOT NULL
 );
@@ -200,26 +271,26 @@ CREATE TABLE RareMedicines (
 -- Section: Surplus Medicines
 -- ===========================
 CREATE TABLE SurplusMedicines (
-    ID INT PRIMARY KEY REFERENCES Medicines(ID),
+    Id INT PRIMARY KEY REFERENCES Medicines(Id),
     ExpirationDate DATE NOT NULL,
     Photo NVARCHAR(MAX),
-    DonorCustomerID INT NOT NULL
+    DonorCustomerId INT NOT NULL
 );
 
 -- ===========================
 -- Section: Charitable Healthcare Supplies
 -- ===========================
 CREATE TABLE CharitableHealthcareSupplies (
-    ID INT PRIMARY KEY REFERENCES HealthcareSupplies(ID),
-    DonorCustomerID INT,
-    CharityOrganizationID INT
+    Id INT PRIMARY KEY REFERENCES HealthcareSupplies(Id),
+    DonorCustomerId INT,
+    CharityOrganizationId INT
 );
 
 -- ===========================
 -- Section: Prepaid Healthcare Supplies
 -- ===========================
 CREATE TABLE PrePaidHealthcareSupplies (
-    ID INT PRIMARY KEY REFERENCES HealthcareSupplies(ID),
+    Id INT PRIMARY KEY REFERENCES HealthcareSupplies(Id),
     MinimumAmountPerCustomer INT NOT NULL,
     Price DECIMAL(10, 2) NOT NULL
 );
@@ -228,82 +299,106 @@ CREATE TABLE PrePaidHealthcareSupplies (
 -- Section: Pharmacy-Medicine Relationship
 -- ===========================
 CREATE TABLE PharmacyMedicine (
-    PharmacyID INT NOT NULL,
-    MedicineID INT NOT NULL,
-    PRIMARY KEY (PharmacyID, MedicineID),
-    FOREIGN KEY (PharmacyID) REFERENCES Pharmacies(ID),
-    FOREIGN KEY (MedicineID) REFERENCES Medicines(ID)
+    PharmacyId INT NOT NULL,
+    MedicineId INT NOT NULL,
+    PRIMARY KEY (PharmacyId, MedicineId),
+    FOREIGN KEY (PharmacyId) REFERENCES Pharmacies(Id),
+    FOREIGN KEY (MedicineId) REFERENCES Medicines(Id)
 );
 
 -- ===========================
 -- Section: Pharmacy-Healthcare Supply Relationship
 -- ===========================
 CREATE TABLE PharmacyHealthcareSupply (
-    PharmacyID INT NOT NULL,
-    HealthcareSupplyID INT NOT NULL,
-    PRIMARY KEY (PharmacyID, HealthcareSupplyID),
-    FOREIGN KEY (PharmacyID) REFERENCES Pharmacies(ID),
-    FOREIGN KEY (HealthcareSupplyID) REFERENCES HealthcareSupplies(ID)
+    PharmacyId INT NOT NULL,
+    HealthcareSupplyId INT NOT NULL,
+    PRIMARY KEY (PharmacyId, HealthcareSupplyId),
+    FOREIGN KEY (PharmacyId) REFERENCES Pharmacies(Id),
+    FOREIGN KEY (HealthcareSupplyId) REFERENCES HealthcareSupplies(Id)
 );
 
 -- ===========================
 -- Section: Charitable Organization-Medicine Relationship
 -- ===========================
 CREATE TABLE CharityOrganizationMedicine (
-    CharityOrganizationID INT NOT NULL,
-    MedicineID INT NOT NULL,
-    PRIMARY KEY (CharityOrganizationID, MedicineID),
-    FOREIGN KEY (CharityOrganizationID) REFERENCES CharitableOrganizations(ID),
-    FOREIGN KEY (MedicineID) REFERENCES Medicines(ID)
+    CharityOrganizationId INT NOT NULL,
+    MedicineId INT NOT NULL,
+    PRIMARY KEY (CharityOrganizationId, MedicineId),
+    FOREIGN KEY (CharityOrganizationId) REFERENCES CharitableOrganizations(Id),
+    FOREIGN KEY (MedicineId) REFERENCES Medicines(Id)
 );
 
 -- ===========================
 -- Section: Orders
 -- ===========================
 CREATE TABLE Orders (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    CustomerID INT NOT NULL,
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    CustomerId INT NOT NULL,
     OrderType NVARCHAR(50) CHECK (OrderType IN ('Commercial', 'Charitable', 'Prepaid')),
     CreatedAt DATETIME DEFAULT GETDATE(),
-    CreatedBy NVARCHAR(255),
+    CreatedById INT NULL,  -- Reference to Customers
     UpdatedAt DATETIME,
-    UpdatedBy NVARCHAR(255),
+    UpdatedById INT NULL,  -- Reference to Customers
     IsDeleted BIT DEFAULT 0,
-    DeletedBy NVARCHAR(255),
-    DeletedDate DATETIME,
+    DeletedById INT NULL,  -- Reference to Customers
+    DeletedAt DATETIME,
     DeletedReason NVARCHAR(255),
-    FOREIGN KEY (CustomerID) REFERENCES Customers(ID)
+    FOREIGN KEY (CustomerId) REFERENCES Customers(Id),
+    FOREIGN KEY (CreatedById) REFERENCES Customers(Id),  -- Updated Foreign key
+    FOREIGN KEY (UpdatedById) REFERENCES Customers(Id),  -- Updated Foreign key
+    FOREIGN KEY (DeletedById) REFERENCES Customers(Id)   -- Updated Foreign key
 );
 
 -- ===========================
 -- Section: Order Details
 -- ===========================
 CREATE TABLE OrderDetails (
-    OrderID INT REFERENCES Orders(ID),
-    ProductID INT NOT NULL,
+    OrderId INT REFERENCES Orders(Id),
+    ProductId INT NOT NULL,
     ProductType NVARCHAR(50) CHECK (ProductType IN ('Medicine', 'HealthcareSupply')),
-    ProductCategoryID INT,  -- Foreign key to either MedicineCategories or HealthcareSupplyCategories
+    ProductCategoryId INT,  -- Foreign key to either MedicineCategories or HealthcareSupplyCategories
     Amount INT NOT NULL CHECK (Amount > 0),
-    PRIMARY KEY (OrderID, ProductID),
-    FOREIGN KEY (ProductCategoryID) REFERENCES MedicineCategories(ID),  -- If ProductType is Medicine
-    FOREIGN KEY (ProductCategoryID) REFERENCES HealthcareSupplyCategories(ID)  -- If ProductType is HealthcareSupply
+    PRIMARY KEY (OrderId, ProductId),
+    FOREIGN KEY (ProductCategoryId) REFERENCES MedicineCategories(Id),  -- If ProductType is Medicine
+    FOREIGN KEY (ProductCategoryId) REFERENCES HealthcareSupplyCategories(Id)  -- If ProductType is HealthcareSupply
 );
 
 -- ===========================
 -- Section: Tickets
 -- ===========================
 CREATE TABLE Tickets (
-    ID INT PRIMARY KEY IDENTITY(1,1),
-    CustomerID INT NOT NULL,
-    OrderID INT REFERENCES Orders(ID),
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    CustomerId INT NOT NULL,
+    OrderId INT REFERENCES Orders(Id),
     IssuedBy NVARCHAR(50) CHECK (IssuedBy IN ('Pharmacy', 'CharityOrganization')),
-    IssuedAt DATETIME DEFAULT GETDATE(),a
-    CreatedBy NVARCHAR(255),
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    CreatedById INT NULL,
+    CreatedByType NVARCHAR(50) CHECK (CreatedByType IN ('Pharmacy', 'CharitableOrganization')),
     UpdatedAt DATETIME,
-    UpdatedBy NVARCHAR(255),
+    UpdatedById INT NULL,
+    UpdatedByType NVARCHAR(50) CHECK (UpdatedByType IN ('Pharmacy', 'CharitableOrganization')),
     IsDeleted BIT DEFAULT 0,
-    DeletedBy NVARCHAR(255),
-    DeletedDate DATETIME,
-    DeletedReason NVARCHAR(255)
-    FOREIGN KEY (CustomerID) REFERENCES Customers(ID)
+    DeletedById INT NULL,
+    DeletedByType NVARCHAR(50) CHECK (DeletedByType IN ('Pharmacy', 'CharitableOrganization')),
+    DeletedAt DATETIME,
+    DeletedReason NVARCHAR(255),
+    FOREIGN KEY (CustomerId) REFERENCES Customers(Id),
+    CONSTRAINT FK_CreatedBy_Pharmacy FOREIGN KEY (CreatedById) REFERENCES Pharmacies(Id),
+    CONSTRAINT FK_CreatedBy_CharityOrg FOREIGN KEY (CreatedById) REFERENCES CharitableOrganizations(Id),
+    CONSTRAINT FK_UpdatedBy_Pharmacy FOREIGN KEY (UpdatedById) REFERENCES Pharmacies(Id),
+    CONSTRAINT FK_UpdatedBy_CharityOrg FOREIGN KEY (UpdatedById) REFERENCES CharitableOrganizations(Id),
+    CONSTRAINT FK_DeletedBy_Pharmacy FOREIGN KEY (DeletedById) REFERENCES Pharmacies(Id),
+    CONSTRAINT FK_DeletedBy_CharityOrg FOREIGN KEY (DeletedById) REFERENCES CharitableOrganizations(Id),
+     CONSTRAINT CK_CreatedBy_Consistency CHECK (
+        (CreatedById IS NULL AND CreatedByType IS NULL) OR
+        (CreatedById IS NOT NULL AND CreatedByType IS NOT NULL)
+    ),
+        CONSTRAINT CK_UpdatedBy_Consistency CHECK (
+        (UpdatedById IS NULL AND UpdatedByType IS NULL) OR
+        (UpdatedById IS NOT NULL AND UpdatedByType IS NOT NULL)
+    ),
+        CONSTRAINT CK_DeletedBy_Consistency CHECK (
+        (DeletedById IS NULL AND DeletedByType IS NULL) OR
+        (DeletedById IS NOT NULL AND DeletedByType IS NOT NULL)
+    )
 );
