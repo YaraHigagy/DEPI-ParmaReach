@@ -13,11 +13,9 @@ namespace PharmaReach.DataAccessLayer.Models
     /// Patients can buy medicines, healthcare supplies, and request aid.  
     /// Donors can sponsor requests or donate surplus medicines.
     /// </summary>
-    internal class Customer
+    internal class Customer : ModelBase
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        // Id property is inherited from ModelBase Class
         
         [MaxLength(255)]
         public string Name { get; set; }
@@ -45,16 +43,7 @@ namespace PharmaReach.DataAccessLayer.Models
 
         #region Audit Fields
         // Self-referential (unary) relationship, where a Customer can be created, updated, or deleted by another Customer (likely an admin).
-
-        public DateTime CreatedAt { get; set; }
-        public int? CreatedById { get; set; }
-        public DateTime? UpdatedAt { get; set; } 
-        public int UpdatedById { get; set; }
-        public bool IsDeleted { get; set; } = false;
-        public int DeletedById { get; set; }
-        public DateTime? DeletedAt { get; set; }
-        [MaxLength(255)]
-        public string DeletedReason { get; set; }
+        // Audity Fields are inherited from ModelBase Class
 
         // Navigation Properties
         [ForeignKey(nameof(CreatedById))]
