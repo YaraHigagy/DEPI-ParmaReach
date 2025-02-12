@@ -17,6 +17,8 @@ namespace PharmaReach.DataAccessLayer.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+
+
         #region Audit Fields
 
         public DateTime CreatedAt { get; set; }
@@ -27,7 +29,7 @@ namespace PharmaReach.DataAccessLayer.Models
         public int DeletedById { get; set; }
         public DateTime? DeletedAt { get; set; }
         [MaxLength(255)]
-        public string DeletedReason { get; set; }
+        public string? DeletedReason { get; set; }
 
         #endregion
     }

@@ -9,11 +9,15 @@ using System.Threading.Tasks;
 
 namespace PharmaReach.DataAccessLayer.Configurations
 {
-    internal class CustomerConfigurations : IEntityTypeConfiguration<Customer>
+    internal class ModelBaseConfigurations : IEntityTypeConfiguration<ModelBase>
     {
-        public void Configure(EntityTypeBuilder<Customer> builder)
+        public void Configure(EntityTypeBuilder<ModelBase> builder)
         {
-            throw new NotImplementedException();
+            #region Audit Fields
+
+            builder.Property(u => u.CreatedAt).HasDefaultValueSql("GETDATE()"); // add current datetime when creating the record itself
+
+            #endregion
         }
     }
 }

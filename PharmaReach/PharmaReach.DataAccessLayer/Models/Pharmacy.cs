@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,9 +13,7 @@ namespace PharmaReach.DataAccessLayer.Models
     /// Responsible for accepting donated medicines, managing stock levels,  
     /// and fulfilling patient requests for medications.
     /// </summary>
-    internal class Pharmacy
+    internal class Pharmacy : Provider
     {
-        //[Data Annotation]
-        //Fields, Foreign Keyes, Relationships
     }
 }

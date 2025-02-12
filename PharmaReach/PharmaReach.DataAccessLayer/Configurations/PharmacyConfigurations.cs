@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace PharmaReach.DataAccessLayer.Configurations
 {
-    internal class CustomerConfigurations : IEntityTypeConfiguration<Customer>
+    internal class PharmacyConfigurations : IEntityTypeConfiguration<Pharmacy>
     {
-        public void Configure(EntityTypeBuilder<Customer> builder)
+        public void Configure(EntityTypeBuilder<Pharmacy> builder)
         {
             throw new NotImplementedException();
         }
