@@ -44,7 +44,7 @@
               "RelativeDocumentMoniker": "PharmaReach.DataAccessLayer\\PharmaReach.DataAccessLayer.csproj",
               "ToolTip": "F:\\Course-DEPI-FullStack.netWebDev\\FinalProject\\PharmaReach\\PharmaReach\\PharmaReach.DataAccessLayer\\PharmaReach.DataAccessLayer.csproj",
               "RelativeToolTip": "PharmaReach.DataAccessLayer\\PharmaReach.DataAccessLayer.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2025-02-08T10:17:41.352Z",
               "EditorCaption": ""
@@ -59,8 +59,7 @@
               "RelativeToolTip": "PharmaReach.DataAccessLayer\\PharmaReachDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-08T10:08:28.338Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-08T10:08:28.338Z"
             },
             {
               "$type": "Document",

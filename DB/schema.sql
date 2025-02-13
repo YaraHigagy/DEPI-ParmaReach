@@ -89,39 +89,17 @@ CREATE TABLE CharitableOrganizationsRecipients (
 
     -- Audit Fields
     CreatedById INT NULL,
-    CreatedByType NVARCHAR(50) CHECK (CreatedByType IN ('Customer', 'CharitableOrganization')),
     UpdatedAt DATETIME,
     UpdatedById INT NULL,
-    UpdatedByType NVARCHAR(50) CHECK (UpdatedByType IN ('Customer', 'CharitableOrganization')),
     IsDeleted BIT DEFAULT 0,
     DeletedById INT NULL,
-    DeletedByType NVARCHAR(50) CHECK (DeletedByType IN ('Customer', 'CharitableOrganization')),
     DeletedAt DATETIME,
     DeletedReason NVARCHAR(255),
 
     FOREIGN KEY (CustomerId) REFERENCES Customers(Id),
-
-    -- Foreign Key Constraints (Conditional)
-    CONSTRAINT FK_CreatedBy_Customer FOREIGN KEY (CreatedById) REFERENCES Customers(Id),
-    CONSTRAINT FK_CreatedBy_CharityOrg FOREIGN KEY (CreatedById) REFERENCES CharitableOrganizations(Id),
-    CONSTRAINT FK_UpdatedBy_Customer FOREIGN KEY (UpdatedById) REFERENCES Customers(Id),
-    CONSTRAINT FK_UpdatedBy_CharityOrg FOREIGN KEY (UpdatedById) REFERENCES CharitableOrganizations(Id),
-    CONSTRAINT FK_DeletedBy_Customer FOREIGN KEY (DeletedById) REFERENCES Customers(Id),
-    CONSTRAINT FK_DeletedBy_CharityOrg FOREIGN KEY (DeletedById) REFERENCES CharitableOrganizations(Id),
-
-    -- Check Constraint (ensures CreatedById is NULL if CreatedByType is NULL, and vice versa)
-    CONSTRAINT CK_CreatedBy_Consistency CHECK (
-        (CreatedById IS NULL AND CreatedByType IS NULL) OR
-        (CreatedById IS NOT NULL AND CreatedByType IS NOT NULL)
-    ),
-        CONSTRAINT CK_UpdatedBy_Consistency CHECK (
-        (UpdatedById IS NULL AND UpdatedByType IS NULL) OR
-        (UpdatedById IS NOT NULL AND UpdatedByType IS NOT NULL)
-    ),
-        CONSTRAINT CK_DeletedBy_Consistency CHECK (
-        (DeletedById IS NULL AND DeletedByType IS NULL) OR
-        (DeletedById IS NOT NULL AND DeletedByType IS NOT NULL)
-    )
+       FOREIGN KEY (CreatedById) REFERENCES CharitableOrganizations(Id),
+    FOREIGN KEY (UpdatedById) REFERENCES CharitableOrganizations(Id),
+    FOREIGN KEY (DeletedById) REFERENCES CharitableOrganizations(Id)
 );
 
 -- ===========================

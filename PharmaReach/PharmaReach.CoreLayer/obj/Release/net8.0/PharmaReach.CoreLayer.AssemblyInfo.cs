@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PharmaReach.CoreLayer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f6c56ec7d68ee12319b7a5f9614cfecb3fdadcf3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9dd16bbb1e16e518f70f12722df196cfac79e0a8")]
 [assembly: System.Reflection.AssemblyProductAttribute("PharmaReach.CoreLayer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PharmaReach.CoreLayer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
