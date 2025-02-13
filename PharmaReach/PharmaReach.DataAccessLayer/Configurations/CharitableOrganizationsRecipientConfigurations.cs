@@ -38,17 +38,17 @@ namespace PharmaReach.DataAccessLayer.Configurations
 
             // Configure Recipient audit fields for CharitableOrganization
             builder.HasOne(r => r.CreatedBy)
-                .WithMany()
+                .WithMany(org => org.Recipients)
                 .HasForeignKey(r => r.CreatedById) // Ensures correct FK column
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(r => r.UpdatedBy)
-                .WithMany()
+                .WithMany(org => org.Recipients)
                 .HasForeignKey(r => r.UpdatedById)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.HasOne(r => r.DeletedBy)
-                .WithMany()
+                .WithMany(org => org.Recipients)
                 .HasForeignKey(r => r.DeletedById)
                 .OnDelete(DeleteBehavior.Restrict);
 

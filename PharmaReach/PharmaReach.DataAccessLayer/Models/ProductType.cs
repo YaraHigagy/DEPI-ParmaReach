@@ -10,7 +10,7 @@ namespace PharmaReach.DataAccessLayer.Models
     /// Represents types of products, including categories like 'Medicine' or 'Healthcare Supply'.
     /// Each type has a name and an optional description.
     /// </summary>
-    internal class ProductType
+    internal class ProductType : CategoryBase
     {
         //[Data Annotation]
         //Fields, Foreign Keyes, Relationships

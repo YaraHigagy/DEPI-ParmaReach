@@ -20,5 +20,13 @@ namespace PharmaReach.DataAccessLayer.Models
         [Url] // Ensures the string follows a valid URL format
         [MaxLength(255)]
         public string LegalLicense { get; set; } //URL Location in server
+
+
+
+        #region Relationships for Audit Fields
+
+        public ICollection<CategoryBase> Categories { get; set; } = new HashSet<CategoryBase>(); // Navigational Property => MANY
+
+        #endregion
     }
 }

@@ -15,5 +15,10 @@ namespace PharmaReach.DataAccessLayer.Models
     /// </summary>
     internal class CharitableOrganization : Provider
     {
+        #region Relationships for Audit Fields
+
+        public ICollection<CharitableOrganizationsRecipient> Recipients { get; set; } = new HashSet<CharitableOrganizationsRecipient>(); // Navigational Property => MANY
+
+        #endregion
     }
 }

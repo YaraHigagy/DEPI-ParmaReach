@@ -11,7 +11,7 @@ namespace PharmaReach.DataAccessLayer.Models
     /// hygiene, and wellness items available on the platform.  
     /// Facilitates browsing, purchasing, and donation of supplies by customers and pharmacies.
     /// </summary>
-    internal class HealthcareSupply
+    internal class HealthcareSupply : Product
     {
         //[Data Annotation]
         //Fields, Foreign Keyes, Relationships

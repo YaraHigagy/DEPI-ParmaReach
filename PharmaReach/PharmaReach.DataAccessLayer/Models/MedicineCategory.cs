@@ -10,7 +10,7 @@ namespace PharmaReach.DataAccessLayer.Models
     /// Represents categories for medicines, such as 'Antibiotics' or 'Pain Relief'.
     /// Each category has a name and an optional description.
     /// </summary>
-    internal class MedicineCategory
+    internal class MedicineCategory : CategoryBase
     {
         //[Data Annotation]
         //Fields, Foreign Keyes, Relationships

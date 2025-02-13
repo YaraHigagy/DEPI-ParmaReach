@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PharmaReach.DataAccessLayer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a64ee954837334f3fea605504f991a2d0787dd26")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4314d48042063859e938d0618ca839ce9341e5fe")]
 [assembly: System.Reflection.AssemblyProductAttribute("PharmaReach.DataAccessLayer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PharmaReach.DataAccessLayer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

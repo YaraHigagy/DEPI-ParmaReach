@@ -10,7 +10,7 @@ namespace PharmaReach.DataAccessLayer.Models
     /// Represents categories for healthcare supplies, such as 'Skincare' or 'First Aid'.
     /// Each category has a name and an optional description.
     /// </summary>
-    internal class HealthcareSupplyCategory
+    internal class HealthcareSupplyCategory : CategoryBase
     {
         //[Data Annotation]
         //Fields, Foreign Keyes, Relationships
