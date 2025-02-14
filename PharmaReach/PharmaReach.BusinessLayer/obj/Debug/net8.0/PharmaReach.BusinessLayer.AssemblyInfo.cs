@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PharmaReach.BusinessLayer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9dd16bbb1e16e518f70f12722df196cfac79e0a8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ce0d6bcaee294663dc2515471e57716035ba822e")]
 [assembly: System.Reflection.AssemblyProductAttribute("PharmaReach.BusinessLayer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PharmaReach.BusinessLayer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
