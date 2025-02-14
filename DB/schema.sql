@@ -330,35 +330,17 @@ CREATE TABLE Tickets (
     Id INT PRIMARY KEY IDENTITY(1,1),
     CustomerId INT NOT NULL,
     OrderId INT REFERENCES Orders(Id),
-    IssuedBy NVARCHAR(50) CHECK (IssuedBy IN ('Pharmacy', 'CharityOrganization')),
+    IssuedBy NVARCHAR(50), -- CHECK (IssuedBy IN ('Pharmacy', 'CharityOrganization')),
     CreatedAt DATETIME DEFAULT GETDATE(),
     CreatedById INT NULL,
-    CreatedByType NVARCHAR(50) CHECK (CreatedByType IN ('Pharmacy', 'CharitableOrganization')),
     UpdatedAt DATETIME,
     UpdatedById INT NULL,
-    UpdatedByType NVARCHAR(50) CHECK (UpdatedByType IN ('Pharmacy', 'CharitableOrganization')),
     IsDeleted BIT DEFAULT 0,
     DeletedById INT NULL,
-    DeletedByType NVARCHAR(50) CHECK (DeletedByType IN ('Pharmacy', 'CharitableOrganization')),
     DeletedAt DATETIME,
     DeletedReason NVARCHAR(255),
     FOREIGN KEY (CustomerId) REFERENCES Customers(Id),
-    CONSTRAINT FK_CreatedBy_Pharmacy FOREIGN KEY (CreatedById) REFERENCES Pharmacies(Id),
-    CONSTRAINT FK_CreatedBy_CharityOrg FOREIGN KEY (CreatedById) REFERENCES CharitableOrganizations(Id),
-    CONSTRAINT FK_UpdatedBy_Pharmacy FOREIGN KEY (UpdatedById) REFERENCES Pharmacies(Id),
-    CONSTRAINT FK_UpdatedBy_CharityOrg FOREIGN KEY (UpdatedById) REFERENCES CharitableOrganizations(Id),
-    CONSTRAINT FK_DeletedBy_Pharmacy FOREIGN KEY (DeletedById) REFERENCES Pharmacies(Id),
-    CONSTRAINT FK_DeletedBy_CharityOrg FOREIGN KEY (DeletedById) REFERENCES CharitableOrganizations(Id),
-     CONSTRAINT CK_CreatedBy_Consistency CHECK (
-        (CreatedById IS NULL AND CreatedByType IS NULL) OR
-        (CreatedById IS NOT NULL AND CreatedByType IS NOT NULL)
-    ),
-        CONSTRAINT CK_UpdatedBy_Consistency CHECK (
-        (UpdatedById IS NULL AND UpdatedByType IS NULL) OR
-        (UpdatedById IS NOT NULL AND UpdatedByType IS NOT NULL)
-    ),
-        CONSTRAINT CK_DeletedBy_Consistency CHECK (
-        (DeletedById IS NULL AND DeletedByType IS NULL) OR
-        (DeletedById IS NOT NULL AND DeletedByType IS NOT NULL)
-    )
+    FOREIGN KEY (CreatedById) REFERENCES Customers(Id),  -- Updated Foreign key
+    FOREIGN KEY (UpdatedById) REFERENCES Customers(Id),  -- Updated Foreign key
+    FOREIGN KEY (DeletedById) REFERENCES Customers(Id)   -- Updated Foreign key
 );
