@@ -14,6 +14,7 @@ namespace PharmaReach.DataAccessLayer.Models
     internal class ModelBase
     {
         [Key]
+        [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
@@ -21,6 +22,7 @@ namespace PharmaReach.DataAccessLayer.Models
 
         #region Audit Fields
 
+        [Required]
         public DateTime CreatedAt { get; set; }
         public int? CreatedById { get; set; }
         public DateTime? UpdatedAt { get; set; }

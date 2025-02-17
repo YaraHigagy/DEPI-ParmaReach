@@ -16,6 +16,7 @@ namespace PharmaReach.DataAccessLayer.Models
     /// </summary>
     internal class CharitableOrganizationsRecipient : Customer
     {
+        [Required]
         [RegularExpression(@"^\d{14}$", ErrorMessage = "National ID must be exactly 14 digits.")]
         [MaxLength(14)]
         public string NationalId { get; set; }
@@ -23,6 +24,7 @@ namespace PharmaReach.DataAccessLayer.Models
         [MaxLength(255)]
         public string? SocialStatusDescription { get; set; }
 
+        [Required]
         [MaxLength(255)]
         public string SerialNumber { get; set; }
 
@@ -32,6 +34,7 @@ namespace PharmaReach.DataAccessLayer.Models
 
         #region Relationships - Navigational Propert
 
+        [Required]
         [ForeignKey(nameof(Customer))]
         public int CustomerId { get; set; } // FK: ONE to ONE Relationship
         [ForeignKey(nameof(CustomerId))]

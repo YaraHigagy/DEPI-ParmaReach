@@ -15,6 +15,7 @@ namespace PharmaReach.DataAccessLayer.Models
     /// </summary>
     internal class CategoryBase : ModelBase
     {
+        [Required]
         [MaxLength(255)]
         public string Name { get; set; }
 

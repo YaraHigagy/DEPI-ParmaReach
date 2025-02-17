@@ -15,13 +15,16 @@ namespace PharmaReach.DataAccessLayer.Models
     /// </summary>
     internal class User : ModelBase
     {
+        [Required]
         [MaxLength(255)]
         public string Name { get; set; }
 
+        [Required]
         [EmailAddress] // Frontend Validation
         [MaxLength(255)]
         public string Email { get; set; }
 
+        [Required]
         [DataType(DataType.Password)] // Frontend Validation ***
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$", ErrorMessage = "Password must be 8-16 characters long, include at least one uppercase letter, one lowercase letter, one number, and one special character.")]
         [StringLength(16, MinimumLength = 8)] // Will be changed to 255 when using hashing

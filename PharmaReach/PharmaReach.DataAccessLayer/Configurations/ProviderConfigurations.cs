@@ -13,7 +13,7 @@ namespace PharmaReach.DataAccessLayer.Configurations
     {
         public void Configure(EntityTypeBuilder<Provider> builder)
         {
-            throw new NotImplementedException();
+            builder.Property(p => p.Address).IsRequired(true);
         }
     }
 }
