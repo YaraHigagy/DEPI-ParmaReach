@@ -13,7 +13,7 @@ namespace PharmaReach.DataAccessLayer.Configurations
     {
         public void Configure(EntityTypeBuilder<Provider> builder)
         {
-            builder.Property(p => p.Address).IsRequired(true);
+            builder.Property(p => p.Address).IsRequired(); // Address is required for providers
         }
     }
 }

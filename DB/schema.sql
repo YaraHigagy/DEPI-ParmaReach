@@ -324,23 +324,37 @@ CREATE TABLE OrderDetails (
 );
 
 -- ===========================
--- Section: Tickets
+-- Section: Pharmacy Tickets
 -- ===========================
-CREATE TABLE Tickets (
+CREATE TABLE PharmacyTickets (
     Id INT PRIMARY KEY IDENTITY(1,1),
     CustomerId INT NOT NULL,
     OrderId INT REFERENCES Orders(Id),
-    IssuedBy NVARCHAR(50), -- CHECK (IssuedBy IN ('Pharmacy', 'CharityOrganization')),
     CreatedAt DATETIME DEFAULT GETDATE(),
-    CreatedById INT NULL,
+    CreatedById INT NULL REFERENCES Pharmacies(Id),
     UpdatedAt DATETIME,
-    UpdatedById INT NULL,
+    UpdatedById INT NULL REFERENCES Pharmacies(Id),
     IsDeleted BIT DEFAULT 0,
-    DeletedById INT NULL,
+    DeletedById INT NULL REFERENCES Pharmacies(Id),
     DeletedAt DATETIME,
     DeletedReason NVARCHAR(255),
-    FOREIGN KEY (CustomerId) REFERENCES Customers(Id),
-    FOREIGN KEY (CreatedById) REFERENCES Customers(Id),  -- Updated Foreign key
-    FOREIGN KEY (UpdatedById) REFERENCES Customers(Id),  -- Updated Foreign key
-    FOREIGN KEY (DeletedById) REFERENCES Customers(Id)   -- Updated Foreign key
+    FOREIGN KEY (CustomerId) REFERENCES Customers(Id)
+);
+
+-- ===========================
+-- Section: Pharmacy Tickets
+-- ===========================
+CREATE TABLE CharityTickets (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    CustomerId INT NOT NULL,
+    OrderId INT REFERENCES Orders(Id),
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    CreatedById INT NULL REFERENCES CharitableOrganizations(Id),
+    UpdatedAt DATETIME,
+    UpdatedById INT NULL REFERENCES CharitableOrganizations(Id),
+    IsDeleted BIT DEFAULT 0,
+    DeletedById INT NULL REFERENCES CharitableOrganizations(Id),
+    DeletedAt DATETIME,
+    DeletedReason NVARCHAR(255),
+    FOREIGN KEY (CustomerId) REFERENCES Customers(Id)
 );
